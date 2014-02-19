@@ -44,12 +44,17 @@
     (response/header resp "link" (:link headers))
     resp))
 
+(defn get-doi [accept doi]
+  @(hc/get (str (config :service :api :url) 
+                (config :service :api :works-path)
+                "/" doi
+                (config :service :api :transform-path))
+           {:keepalive 30000
+            :timeout 10000
+            :headers {"Accept" accept}}))
+
 (defn proxy-doi [accept doi]
-  (let [{:keys [status error body headers]}
-         @(hc/get (str (config :service :api :url) "/works/" doi "/transform")
-                 {:keepalive 30000
-                  :timeout 10000
-                  :headers {"Accept" accept}})]
+  (let [{:keys [status error body headers]} (get-doi accept doi)]
     (if error
       (-> (response/response error)
           (response/status 502))
@@ -59,11 +64,7 @@
           (apply-links headers)))))
 
 (defn proxy-doi-headers [accept doi]
-  (let [{:keys [status error body headers]}
-         @(hc/get (str (config :service :api :url) "/works/" doi "/transform")
-                 {:keepalive 30000
-                  :timeout 10000
-                  :headers {"Accept" accept}})]
+  (let [{:keys [status error body headers]} (get-doi accept doi)]
     (if error
       (-> (response/response "")
           (response/status 502))
