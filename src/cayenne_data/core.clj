@@ -109,6 +109,6 @@
       (wrap-heartbeat)
       (wrap-cors)))
 
-(defn -main [args]
+(defn -main [& args]
   (hs/run-server #'conneg {:port (config :server :port)}))
   
