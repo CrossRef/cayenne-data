@@ -1,0 +1,18 @@
+{:service
+ {:api
+  {:url "http://api.crossref.org"
+   :convert-path "/convert"
+   :works-path "/works"}
+  :query
+  {:url "http://www.crossref.org"
+   :doi-path "/search/doi"
+   :id "cnproxy@crossref.org"}
+  :resolver
+  {:url "http://dx.doi.org"}
+  :data
+  {:url "http://data.crossref.org"}
+  :id
+  {:url "http://id.crossref.org"}}
+ :check
+ {:doi "10.5555/12345678"}}
+
