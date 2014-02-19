@@ -29,7 +29,7 @@
 
 (def-web-check :crossref-api
   (str
-   (config :service :api :url) "/"
+   (config :service :api :url)
    (config :service :api :works-path) "/"
    (config :check :doi)))
 
@@ -109,5 +109,5 @@
       (wrap-cors)))
 
 (defn -main [args]
-  (hs/run-server #'conneg {:port 3000}))
+  (hs/run-server #'conneg {:port (config :server :port)}))
   
