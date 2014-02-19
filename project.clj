@@ -5,7 +5,7 @@
   :plugins [[codox "0.6.4"]
             [lein-daemon "0.5.4"]]
   :jvm-opts ["-Dconfig=config.edn"]
-  :daemon {:caeynne-data {:ns cayenne-data.core
+  :daemon {:cayenne-data {:ns cayenne-data.core
                           :pidfile "cayenne-data.pid"}}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [compojure "1.1.6"]
