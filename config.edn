@@ -2,6 +2,10 @@
  {:port 3002
   :data-host "data.crossref.org"
   :id-host "id.crossref.org"}
+ :logstash
+ {:host "5.9.51.2"
+  :port 4444
+  :name "cayenne-data"}
  :service
  {:api
   {:url "http://api.crossref.org"

@@ -8,6 +8,7 @@
   :daemon {:cayenne-data {:ns cayenne-data.core
                           :pidfile "cayenne-data.pid"}}
   :dependencies [[org.clojure/clojure "1.5.1"]
+                 [kjw/ring-logstash "0.1.0"]
                  [compojure "1.1.6"]
                  [crossref/heartbeat "0.1.1"]
                  [http-kit "2.1.10"]

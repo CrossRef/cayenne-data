@@ -1,6 +1,7 @@
 (ns cayenne-data.core
   (:gen-class)
-  (:require [compojure.core :refer [defroutes routes context GET HEAD]]
+  (:require [ring.middleware.logstash :as logstash]
+            [compojure.core :refer [defroutes routes context GET HEAD]]
             [compojure.handler :as handler]
             [ring.util.response :as response :refer [redirect]]
             [heartbeat.ring :refer [wrap-heartbeat]]
@@ -105,6 +106,9 @@
 
 (def conneg
   (-> all-routes
+      (logstash/wrap-logstash :host (config :logstash :host)
+                              :port (config :logstash :port)
+                              :name (config :logstash :name))
       (handler/api)
       (wrap-heartbeat)
       (wrap-cors)))
