@@ -8,7 +8,7 @@
   :name "cayenne-data"}
  :service
  {:api
-  {:url "localhost:3000"
+  {:url "http://localhost:3000"
    :transform-path "/transform"
    :works-path "/works"}
   :data
