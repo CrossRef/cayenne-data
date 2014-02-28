@@ -28,11 +28,12 @@
    "application/vnd.crossref.unixref+xml"
    "application/vnd.crossref.unixsd+xml"])
 
-(def-web-check :crossref-api
-  (str
-   (config :service :api :url)
-   (config :service :api :works-path) "/"
-   (config :check :doi)))
+;; disabled due to incorrect reporting
+;; (def-web-check :crossref-api
+;;   (str
+;;    (config :service :api :url)
+;;    (config :service :api :works-path) "/"
+;;    (config :check :doi)))
 
 (defn make-data-redirect [doi]
   (redirect (str (config :service :data :url) "/" doi)))
