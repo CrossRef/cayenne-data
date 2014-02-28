@@ -58,8 +58,8 @@
 (defn proxy-doi [accept doi]
   (let [{:keys [status error body headers]} (get-doi accept doi)]
     (if error
-      (-> (response/response error)
-          (response/status 502))
+      (-> (response/response "")
+          (response/status 504))
       (-> (response/response body)
           (response/status status)
           (response/content-type (get headers :content-type))
@@ -69,7 +69,7 @@
   (let [{:keys [status error body headers]} (get-doi accept doi)]
     (if error
       (-> (response/response "")
-          (response/status 502))
+          (response/status 504))
       (-> (response/response "")
           (response/status status)
           (response/content-type (get headers :content-type))
