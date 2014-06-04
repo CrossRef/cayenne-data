@@ -1,6 +1,8 @@
 (ns cayenne-data.core
   (:gen-class)
-  (:require [ring.middleware.logstash :as logstash]
+  (:import [java.net URLEncoder])
+  (:require [clojure.string :as string]
+            [ring.middleware.logstash :as logstash]
             [compojure.core :refer [defroutes routes context GET HEAD]]
             [compojure.handler :as handler]
             [ring.util.response :as response :refer [redirect]]
@@ -46,14 +48,20 @@
     (response/header resp "link" (:link headers))
     resp))
 
+;; todo we split the DOI and only url encode the suffix.
+;; url encoding the / separator between prefix and suffix
+;; causes issues with the cayenne api. This should be fixed
+;; in cayenne.
 (defn get-doi [accept doi]
-  @(hc/get (str (config :service :api :url) 
-                (config :service :api :works-path)
-                "/" doi
-                (config :service :api :transform-path))
-           {:keepalive 30000
-            :timeout 10000
-            :headers {"Accept" accept}}))
+  (let [doi-parts (string/split doi #"/" 2)
+        norm-doi (str (first doi-parts) "/" (-> doi-parts second URLEncoder/encode))]
+    @(hc/get (str (config :service :api :url) 
+                  (config :service :api :works-path)
+                  "/" norm-doi
+                  (config :service :api :transform-path))
+             {:keepalive 30000
+              :timeout 10000
+              :headers {"Accept" accept}})))
 
 (defn proxy-doi [accept doi]
   (let [{:keys [status error body headers]} (get-doi accept doi)]
