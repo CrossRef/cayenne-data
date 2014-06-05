@@ -7,8 +7,12 @@
   :port 4444
   :name "cayenne-data"}
  :service
- {:api
+ {:internal-api
   {:url "http://localhost:3000"
+   :transform-path "/transform"
+   :works-path "/works"}
+  :api
+  {:url "http://api.crossref.org"
    :transform-path "/transform"
    :works-path "/works"}
   :data

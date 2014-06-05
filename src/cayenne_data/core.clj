@@ -55,10 +55,10 @@
 (defn get-doi [accept doi]
   (let [doi-parts (string/split doi #"/" 2)
         norm-doi (str (first doi-parts) "/" (-> doi-parts second URLEncoder/encode))]
-    @(hc/get (str (config :service :api :url) 
-                  (config :service :api :works-path)
+    @(hc/get (str (config :service :internal-api :url) 
+                  (config :service :internal-api :works-path)
                   "/" norm-doi
-                  (config :service :api :transform-path))
+                  (config :service :internal-api :transform-path))
              {:keepalive 30000
               :timeout 10000
               :headers {"Accept" accept}})))
