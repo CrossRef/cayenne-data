@@ -109,6 +109,7 @@
   [h]
   (fn [request]
     (-> (h request)
+        (assoc-in [:headers "Access-Control-Expose-Headers"] "Link")
         (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
         (assoc-in [:headers "Access-Control-Allow-Headers"]
                   "X-Requested-With"))))
