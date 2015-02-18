@@ -1,19 +1,10 @@
 FROM ubuntu:14.04
 
-COPY . /src
+COPY target/cayenne-data-0.1.0-standalone.jar /src/cayenne-data.jar
 
-RUN apt-get update -qqy && \
-    apt-get install -qqy openjdk-7-jre-headless && \
-    apt-get install -qqy wget && \
-    wget -q -O /usr/bin/lein \
-      https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein && \
-    chmod +x /usr/bin/lein
-
-ENV LEIN_ROOT true
+RUN apt-get update -qyy && apt-get install -qqy openjdk-7-jre-headless
 
 ENV SERVER_PORT 3000
-
 EXPOSE 3000
 
-WORKDIR /src
-CMD lein run
+CMD java -jar /src/cayenne-data.jar

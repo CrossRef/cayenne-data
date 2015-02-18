@@ -7,9 +7,10 @@
   :jvm-opts ["-Dconfig=config.edn"]
   :daemon {:cayenne-data {:ns cayenne-data.core
                           :pidfile "cayenne-data.pid"}}
+  :profiles {:uberjar {:aot :all}}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [kjw/ring-logstash "0.1.3"]
                  [compojure "1.1.6"]
                  [crossref/heartbeat "0.1.1"]
-                 [http-kit "2.1.10"]
+                 [http-kit "2.1.16"]
                  [conf-er "1.0.1"]])
