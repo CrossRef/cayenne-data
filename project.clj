@@ -20,8 +20,7 @@
         :logstash-port 4444
         :logstash-name "cayenne-data"
         :api-url "http://api.crossref.org"
-        ;;        :api-internal-url "http://localhost:3000"
-        :api-internal-url "http://api.crossref.org"
+        :api-internal-url "http://localhost:3000"
         :data-url "http://data.crossref.org"
         :id-url "http://id.crossref.org"
         :test-doi "10.5555/12345678"})
