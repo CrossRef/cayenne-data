@@ -10,7 +10,7 @@
             [heartbeat.core :refer [def-web-check]]
             [org.httpkit.server :as hs]
             [org.httpkit.client :as hc]
-            [conf-er :refer [config]]))
+            [environ.core :refer [env]]))
 
 (def data-host "data.crossref.org")
 
@@ -33,35 +33,29 @@
 ;; disabled due to incorrect reporting
 ;; (def-web-check :crossref-api
 ;;   (str
-;;    (config :service :api :url)
-;;    (config :service :api :works-path) "/"
-;;    (config :check :doi)))
+;;    (env :api-url)
+;;    (env :api-works-path) "/"
+;;    (env :test-doi)))
 
 (defn make-data-redirect [doi]
-  (redirect (str (config :service :data :url) "/" doi)))
+  (redirect (str (env :data-url) "/" doi)))
 
 (defn make-api-redirect [path]
-  (redirect (str (config :service :api :url) "/" path)))
+  (redirect (str (env :api-url) "/" path)))
 
 (defn apply-links [resp headers]
   (if (:link headers)
     (response/header resp "link" (:link headers))
     resp))
 
-;; todo we split the DOI and only url encode the suffix.
-;; url encoding the / separator between prefix and suffix
-;; causes issues with the cayenne api. This should be fixed
-;; in cayenne.
 (defn get-doi [accept doi]
-  (let [doi-parts (string/split doi #"/" 2)
-        norm-doi (str (first doi-parts) "/" (-> doi-parts second URLEncoder/encode))]
-    @(hc/get (str (config :service :internal-api :url) 
-                  (config :service :internal-api :works-path)
-                  "/" norm-doi
-                  (config :service :internal-api :transform-path))
-             {:keepalive 30000
-              :timeout 10000
-              :headers {"Accept" accept}})))
+  @(hc/get (str (env :api-internal-url)
+                "/v1/works/"
+                (URLEncoder/encode doi)
+                "/transform")
+           {:keepalive 30000
+            :timeout 10000
+            :headers {"Accept" accept}}))
 
 (defn proxy-doi [accept doi]
   (let [{:keys [status error body headers]} (get-doi accept doi)]
@@ -116,13 +110,13 @@
 
 (def conneg
   (-> all-routes
-      (logstash/wrap-logstash :host (config :logstash :host)
-                              :port (config :logstash :port)
-                              :name (config :logstash :name))
+      (logstash/wrap-logstash :host (env :logstash-host)
+                              :port (env :logstash-port)
+                              :name (env :logstash-name))
       (handler/api)
       (wrap-heartbeat)
       (wrap-cors)))
 
 (defn -main [& args]
-  (hs/run-server #'conneg {:port (config :server :port)}))
+  (hs/run-server #'conneg {:port (env :server-port)}))
   
