@@ -13,7 +13,7 @@
                  [environ "1.0.0"]
                  [kjw/ring-logstash "0.1.3"]
                  [compojure "1.1.6"]
-                 [crossref/heartbeat "0.1.1"]
+                 [crossref/heartbeat "0.1.4"]
                  [http-kit "2.1.16"]]
   :env {:server-port 3000
         :logstash-host "127.0.0.1"
