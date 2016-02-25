@@ -3,15 +3,22 @@
 Serves `data.crossref.org` and `id.crossref.org` by proxying requests to
 the cayenne API at `api.crossref.org`.
 
-## Docker
+## Docker / Convox
+	
+### Run for local development
 
-Build an uberjar:
+Ensure you have created and are running a docker machine:
 
-    lein uberjar
+    docker-machine create --driver virtualbox default
+	docker-machine start default
+	eval "$(docker-machine env default)"
+	
+Run on local machine:
 
-Build a docker image (copies in the uberjar):
+    convox start
+	
+### Deploy to AWS
 
-    docker build -t cayenne-data .
-
-If the project version number in project.clj changes, the Dockerfile
-must also be updated to include the JAR with correct version number.
+    convox login grid.convox.com --password <YOUR_CONVOX_GRID_PASSWORD>
+	convox apps create cayenne-data
+	convox deploy
