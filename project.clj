@@ -1,4 +1,4 @@
-(defproject crossref/cayenne-data "0.1.0"
+(defproject crossref/cayenne-data "1.0.0"
   :description "DOI data proxy"
   :url "http://github.com/CrossRef/cayenne-data"
   :main cayenne-data.core
@@ -15,7 +15,8 @@
                  [compojure "1.1.6"]
                  [crossref/heartbeat "0.1.4"]
                  [http-kit "2.1.16"]]
-  :env {:server-port 3000
+  :env {:version "1.0.0"
+        :server-port 3000
         :logstash-host "127.0.0.1"
         :logstash-port 4444
         :logstash-name "cayenne-data"

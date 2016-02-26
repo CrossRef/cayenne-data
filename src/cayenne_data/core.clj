@@ -7,7 +7,7 @@
             [compojure.handler :as handler]
             [ring.util.response :as response :refer [redirect]]
             [heartbeat.ring :refer [wrap-heartbeat]]
-            [heartbeat.core :refer [def-web-check]]
+            [heartbeat.core :refer [def-web-check def-version]]
             [org.httpkit.server :as hs]
             [org.httpkit.client :as hc]
             [environ.core :refer [env]]))
@@ -33,6 +33,8 @@
 (def-web-check :crossref-api
   (str
    (env :api-internal-url) "/works/" (env :test-doi)))
+
+(def-version (env :version))
 
 (defn make-data-redirect [doi]
   (redirect (str (env :data-url) "/" doi)))
