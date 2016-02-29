@@ -103,9 +103,11 @@
   (fn [request]
     (-> (h request)
         (assoc-in [:headers "Access-Control-Expose-Headers"] "Link")
+        (assoc-in [:headers "Access-Control-Allow-Headers"] "*")
         (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
         (assoc-in [:headers "Access-Control-Allow-Headers"]
-                  "X-Requested-With"))))
+                  (str "X-Requested-With, Accept, Accept-Encoding, "
+                       "Accept-Charset, Accept-Language, Accept-Ranges")))))
 
 (def conneg
   (-> all-routes
