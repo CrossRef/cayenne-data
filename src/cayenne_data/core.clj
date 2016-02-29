@@ -107,7 +107,7 @@
         (assoc-in [:headers "Access-Control-Allow-Origin"] "*")
         (assoc-in [:headers "Access-Control-Allow-Headers"]
                   (str "X-Requested-With, Accept, Accept-Encoding, "
-                       "Accept-Charset, Accept-Language, Accept-Ranges")))))
+                       "Accept-Charset, Accept-Language, Accept-Ranges, Cache-Control")))))
 
 (def conneg
   (-> all-routes
