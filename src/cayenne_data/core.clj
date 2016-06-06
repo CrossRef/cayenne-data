@@ -119,5 +119,5 @@
       (wrap-cors)))
 
 (defn -main [& args]
-  (hs/run-server #'conneg {:port (env :server-port)}))
+  (hs/run-server #'conneg {:port (env :server-port) :thread 64}))
   
